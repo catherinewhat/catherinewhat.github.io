@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Turtle Coding Playground</title>
+<style>
+  /* Layout */
+  body, html {
+    margin: 0; padding: 0; height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa;
+    display: flex;
+    overflow: hidden;
+  }
+  #container {
+    display: flex;
+    flex: 1;
+    height: 100vh;
+  }
+  .panel {
+    box-sizing: border-box;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  /* Left: instructions */
+  #instructions {
+    width: 25%;
+    background: #2c3e50;
+    color: #ecf0f1;
+    border-right: 2px solid #34495e;
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+  }
+  #instructions h2 {
+    margin-top: 0;
+    font-weight: 700;
+    border-bottom: 2px solid #2980b9;
+    padding-bottom: 10px;
+  }
+  #instructions p {
+    line-height: 1.5;
+  }
+
+  /* Middle: code editor */
+  #code-editor {
+    width: 35%;
+    background: white;
+    border-right: 2px solid #bdc3c7;
+    display: flex;
+    flex-direction: column;
+  }
+  #code-editor textarea {
+    flex-grow: 1;
+    font-family: 'Source Code Pro', monospace, monospace;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    border: none;
+    padding: 15px;
+    resize: none;
+    outline: none;
+    background: #fefefe;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  #code-editor .hint {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    background: #ecf0f1;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+  #run-btn {
+    background: #27ae60;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  #run-btn:hover:not(:disabled) {
+    background: #2ecc71;
+  }
+  #run-btn:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+  }
+
+  /* Right: grid */
+  #grid-container {
+    width: 40%;
+    background: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #grid {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    gap: 4px;
+    background: #ecf0f1;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+  .cell {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    user-select: none;
+  }
+  .turtle {
+    font-size: 26px;
+    transition: background-color 0.3s ease;
+    background-color: #27ae60;
+    border-radius: 6px;
+    color: white;
+  }
+  #status {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #34495e;
+    min-height: 22px;
+    font-weight: 600;
+    user-select: none;
+  }
+
+</style>
+</head>
+<body>
+<div id="container">
+  <!-- Left Panel: Instructions -->
+  <div class="panel" id="instructions">
+    <h2>Assignment & Instructions</h2>
+    <h3>ASSIGNMENT 10. DRAW LETTER K</h3>
+    <p>Use the following commands to control the green turtle <span style="font-size:1.2rem;">🐢</span> to place eggs in the shape of a letter K:</p>
+    <ul>
+      <li><code>MOVE</code>: Move forward 1 cell</li>
+      <li><code>PUTEGG</code>: Put an egg (🥚) on current cell</li>
+      <li><code>TAKEEGG</code>: Remove egg from current cell (if any)</li>
+      <li><code>LEFTTURN</code>: Turn left 90°</li>
+      <li><code>RIGHTTURN</code>: Turn right 90°</li>
+      <li>Use <code>FOR</code> and <code>WHILE</code> loops and <code>FUNCTIONS</code> to write your code</li>
+    </ul>
+    <ol style="background-color:LightBlue; color:Black;">
+      <li><a href="page1.html">DRAW 5 EGGS IN A ROW</a>
+      <li><a href="page2.html">EGG SPACE EGG SPACE EGG</a>
+      <li><a href="page3.html">DRAW AN EGG SQUARE 2X2</a>
+      <li><a href="page4.html">EGG IN EVERY CORNER</a>
+      <li><a href="page5.html">10X10 WHILE LOOP SQUARE</a>
+      <li><a href="page6.html">5X5 FOR LOOP SQUARE</a>
+      <li><a href="page7.html">DRAW A 10X10 WHILE LOOP SQUARE AND INSIDE DRAW A 3X3 FOR LOOP SQUARE IN THE MIDDLE</a>
+      <li><a href="page8.html">DRAW A BIG TRIANGLE</a>
+      <li><a href="page9.html">DRAW LETTER A</a>
+      <li><a href="page10.html">DRAW LETTER K</a>
+      <li><a href="page11.html">DRAW LETTER C</a>
+      <li><a href="page12.html">DRAW LETTER E</a>
+      <li><a href="page13.html">DRAW LETTER F</a>
+      <li><a href="page14.html">DRAW LETTER H</a>
+      <li><a href="page15.html">DRAW LADDER</a>
+      <li><a href="page16.html">DRAW CHECKERBOARD</a>
+      <li><a href="page17.html">DRAW A HOUSE</a>
+      <li><a href="page18.html">DRAW US FLAG</a>
+    </ol>
+
+  </div>
+
+  <!-- Middle Panel: Code Editor -->
+  <div class="panel" id="code-editor">
+    <div class="hint">Try commands like:<br>
+      <code>FOR i IN RANGE(4):</code><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>MOVE</code><br>
+      <code>PUTEGG</code><br>
+      <code>LEFTTURN</code><br>
+      <br>
+      (Indentation matters!)
+    </div>
+    <textarea id="code" spellcheck="false" placeholder="Write your turtle code here..."></textarea>
+    <button id="run-btn">Run</button>
+  </div>
+
+  <!-- Right Panel: Grid -->
+  <div class="panel" id="grid-container">
+    <div id="grid" aria-label="Turtle grid"></div>
+    <div id="status"></div>
+  </div>
+</div>
+
+<script>
+  // Setup grid 10x10
+  const grid = document.getElementById('grid');
+  const status = document.getElementById('status');
+  const ROWS = 10;
+  const COLS = 10;
+
+  // Represent the grid as 2D array of cells
+  let cells = [];
+
+  function createGrid() {
+    grid.innerHTML = '';
+    cells = [];
+    for (let r = 0; r < ROWS; r++) {
+      let row = [];
+      for (let c = 0; c < COLS; c++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.dataset.row = r;
+        cell.dataset.col = c;
+        cell.dataset.hasEgg = 'false';
+        grid.appendChild(cell);
+        row.push(cell);
+      }
+      cells.push(row);
+    }
+  }
+
+  // Turtle state
+  let turtle = {
+    row: 9,  // Start bottom-left corner
+    col: 0,
+    direction: 0, // 0 = up, 90 = right, 180 = down, 270 = left
+  };
+
+  function directionName(dir) {
+    switch(dir % 360) {
+      case 0: return 'Up';
+      case 90:
+      case -270: return 'Right';
+      case 180:
+      case -180: return 'Down';
+      case 270:
+      case -90: return 'Left';
+      default: return '';
+    }
+  }
+
+  // Clear turtle and eggs visuals
+  function clearGridVisuals() {
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS; c++) {
+        cells[r][c].textContent = '';
+        cells[r][c].classList.remove('turtle');
+      }
+    }
+  }
+
+ // Draw turtle in current position
+function drawTurtle() {
+  clearGridVisuals();
+
+  // Show eggs first
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      if (cells[r][c].dataset.hasEgg === 'true') {
+        cells[r][c].textContent = '🥚';
+      }
+    }
+  }
+
+  // Compute normalized direction: 0, 90, 180, 270
+  let dir = ((turtle.direction % 360) + 360) % 360;
+
+  // Pick arrow emoji based on direction
+  let arrow = '🐢';
+  if (dir === 0) arrow = '⬆️';
+  else if (dir === 90) arrow = '➡️';
+  else if (dir === 180) arrow = '⬇️';
+  else if (dir === 270) arrow = '⬅️';
+
+  // Draw turtle in its current cell
+  const cell = cells[turtle.row][turtle.col];
+  cell.textContent = arrow;
+  cell.classList.add('turtle');
+}
+
+
+  // Turtle Commands
+  function move() {
+    // Move forward based on direction, but do not leave grid
+    let {row, col, direction} = turtle;
+    let newRow = row;
+    let newCol = col;
+
+    switch (direction % 360) {
+      case 0:
+      case -360:
+        newRow = row - 1;
+        break;
+      case 90:
+      case -270:
+        newCol = col + 1;
+        break;
+      case 180:
+      case -180:
+        newRow = row + 1;
+        break;
+      case 270:
+      case -90:
+        newCol = col - 1;
+        break;
+      default:
+        break;
+    }
+
+    // Check bounds
+    if (newRow < 0 || newRow >= ROWS || newCol < 0 || newCol >= COLS) {
+      throw new Error('MOVE command would move turtle out of grid!');
+    }
+
+    turtle.row = newRow;
+    turtle.col = newCol;
+    drawTurtle();
+  }
+
+  function putEgg() {
+    const cell = cells[turtle.row][turtle.col];
+    if (cell.dataset.hasEgg === 'true') {
+      throw new Error('There is already an egg here!');
+    }
+    cell.dataset.hasEgg = 'true';
+    cell.textContent = '🥚';
+  }
+
+  function takeEgg() {
+    const cell = cells[turtle.row][turtle.col];
+    if (cell.dataset.hasEgg === 'false') {
+      throw new Error('No egg to take here!');
+    }
+    cell.dataset.hasEgg = 'false';
+    cell.textContent = '';
+  }
+
+ // Turn left: subtract 90 degrees
+function leftTurn() {
+  turtle.direction = (turtle.direction - 90 + 360) % 360;
+  drawTurtle();
+}
+
+// Turn right: add 90 degrees
+function rightTurn() {
+  turtle.direction = (turtle.direction + 90) % 360;
+  drawTurtle();
+}
+
+  // Parsing and running code line by line
+
+  function normalizeLine(line) {
+    return line.trim().toUpperCase();
+  }
+
+  // We support:
+  // MOVE
+  // PUTEGG
+  // TAKEEGG
+  // LEFTTURN
+  // RIGHTTURN
+  // FOR i IN RANGE(n):
+  // WHILE <condition>: (only support WHILE TRUE)
+  // FUNCTIONS: def func(): ... call func()
+  // Indentation based execution is tricky, so we'll do a minimal interpreter for this demo.
+  
+  // We'll parse lines, build simple structure, and then run commands asynchronously.
+
+  // Minimal parsing with support for FOR loops (fixed range), and functions with call
+
+  // Globals for user functions:
+  let userFunctions = {};
+
+  // Preprocessing input code:
+  function preprocessCode(rawCode) {
+    // Normalize line endings
+    let lines = rawCode.replace(/\r\n/g, '\n').split('\n');
+
+    // Remove empty lines and trailing spaces
+    lines = lines.filter(line => line.trim() !== '');
+
+    return lines;
+  }
+
+  // Parse code into blocks (handle indentation)
+  function parseCode(lines) {
+    // We'll build a structure:
+    // [{type:'command'|'for'|'def'|'call'|'while', line: string, indent: int, body: []}, ...]
+    // This is a minimal parser based on indentation (2 or 4 spaces)
+    function countIndent(line) {
+      let count = 0;
+      for (let ch of line) {
+        if (ch === ' ') count++;
+        else break;
+      }
+      return count;
+    }
+
+    let idx = 0;
+    function parseBlock(indentLevel) {
+      let block = [];
+      while (idx < lines.length) {
+        let line = lines[idx];
+        let indent = countIndent(line);
+        if (indent < indentLevel) break;
+        if (indent > indentLevel) {
+          throw new Error('Invalid indentation at line ' + (idx+1));
+        }
+        let trimmed = line.trim();
+
+        if (/^FOR\s+\w+\s+IN\s+RANGE\((\d+)\):$/i.test(trimmed)) {
+          // Parse FOR loop
+          const n = parseInt(trimmed.match(/^FOR\s+\w+\s+IN\s+RANGE\((\d+)\):$/i)[1]);
+          idx++;
+          const body = parseBlock(indentLevel + 4);
+          block.push({type: 'for', count: n, body: body, line: trimmed});
+        }
+        else if (/^WHILE\s+TRUE:$/i.test(trimmed)) {
+          idx++;
+          const body = parseBlock(indentLevel + 4);
+          block.push({type: 'while', body: body, line: trimmed});
+        }
+        else if (/^DEF\s+(\w+)\(\):$/i.test(trimmed)) {
+          // function def
+          const funcName = trimmed.match(/^DEF\s+(\w+)\(\):$/i)[1];
+          idx++;
+          const body = parseBlock(indentLevel + 4);
+          block.push({type: 'def', name: funcName, body: body, line: trimmed});
+        }
+        else if (/^\w+\(\)$/i.test(trimmed)) {
+          // function call
+          block.push({type: 'call', name: trimmed.replace(/\(\)/g, ''), line: trimmed});
+          idx++;
+        }
+        else {
+          // command line
+          block.push({type: 'command', command: trimmed, line: trimmed});
+          idx++;
+        }
+      }
+      return block;
+    }
+
+    return parseBlock(0);
+  }
+
+  // Executor (async to allow line by line animation)
+  async function executeBlock(block) {
+    for (let stmt of block) {
+      if (stmt.type === 'command') {
+        await executeCommand(stmt.command);
+      } else if (stmt.type === 'for') {
+        for (let i = 0; i < stmt.count; i++) {
+          await executeBlock(stmt.body);
+        }
+      } else if (stmt.type === 'while') {
+        // Only support while true
+        while (true) {
+          try {
+            await executeBlock(stmt.body);
+          } catch(e) {
+            if (e.message === 'BREAK_LOOP') break;
+            else throw e;
+          }
+        }
+      } else if (stmt.type === 'def') {
+        userFunctions[stmt.name] = stmt.body;
+      } else if (stmt.type === 'call') {
+        if (!(stmt.name in userFunctions)) {
+          throw new Error(`Function "${stmt.name}" not defined!`);
+        }
+        await executeBlock(userFunctions[stmt.name]);
+      }
+    }
+  }
+
+  // Single command executor with 600ms delay for animation
+  async function executeCommand(cmd) {
+    updateStatus('Executing: ' + cmd);
+    cmd = cmd.trim().toUpperCase();
+    await delay(200);
+
+    switch(cmd) {
+      case 'MOVE':
+        move();
+        break;
+      case 'PUTEGG':
+        putEgg();
+        break;
+      case 'TAKEEGG':
+        takeEgg();
+        break;
+      case 'LEFTTURN':
+        leftTurn();
+        break;
+      case 'RIGHTTURN':
+        rightTurn();
+        break;
+      case 'BREAK':
+        throw new Error('BREAK_LOOP');
+      default:
+        if (cmd === '') return;
+        throw new Error(`Unknown command: "${cmd}"`);
+    }
+  }
+//allows tab to work
+  document.addEventListener("DOMContentLoaded", function() {
+  const textarea = document.getElementById("code");
+  textarea.addEventListener("keydown", function(e) {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+
+      // Set textarea value to: text before caret + tab + text after caret
+      this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
+
+      // Move caret
+      this.selectionStart = this.selectionEnd = start + 1;
+    }
+  });
+});
+
+
+  // Utility delay
+  function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // Status message
+  function updateStatus(msg) {
+    status.textContent = msg;
+  }
+
+  // Initialize
+  function reset() {
+    turtle = {row: 9, col: 0, direction: 90};
+    createGrid();
+    drawTurtle();
+    updateStatus('Ready');
+  }
+
+  // Run button event
+  document.getElementById('run-btn').addEventListener('click', async () => {
+    const runBtn = document.getElementById('run-btn');
+    runBtn.disabled = true;
+    updateStatus('Starting execution...');
+    try {
+      reset();
+      userFunctions = {};
+      let code = document.getElementById('code').value;
+      let lines = preprocessCode(code);
+      let parsed = parseCode(lines);
+      await executeBlock(parsed);
+      updateStatus('Execution complete!');
+    } catch(e) {
+      updateStatus('Error: ' + e.message);
+      alert('Error during execution:\n' + e.message);
+    }
+    runBtn.disabled = false;
+  });
+
+  // Start fresh
+  reset();
+</script>
+
+</body>
+</html>
